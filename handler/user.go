@@ -163,7 +163,9 @@ func (h *UserHandler) UploadAvatar(c *gin.Context) {
 		return
 	}
 
-	userId := 11
+	/* ambil current usernya dari global context */
+	currentUser := c.MustGet("currentUser").(user.User)
+	userId := currentUser.ID
 
 	path := fmt.Sprintf("images/%d-%s", userId, file.Filename)
 
