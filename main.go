@@ -2,6 +2,7 @@ package main
 
 import (
 	"bwastartup/auth"
+	"bwastartup/campaigns"
 	"bwastartup/handler"
 	"bwastartup/helper"
 	"bwastartup/user"
@@ -29,8 +30,21 @@ func main() {
 	fmt.Println("Database connected")
 
 	userRepository := user.NewRepository(db)
+	campaignRepository := campaigns.NewRepository(db)
+
+	campaigns, _ := campaignRepository.FindByUserId(10)
+
+	fmt.Println("debug")
+	fmt.Println("debug")
+	fmt.Println("debug")
+	fmt.Println(len(campaigns))
+	for _, campaign := range campaigns {
+		fmt.Println(campaign)
+	}
+
 	userService := user.NewService(userRepository)
 	authService := auth.NewJWTService()
+
 	userHandler := handler.NewUserHandler(userService, authService)
 
 	r := gin.Default()
