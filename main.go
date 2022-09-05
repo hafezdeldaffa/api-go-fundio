@@ -32,18 +32,13 @@ func main() {
 	userRepository := user.NewRepository(db)
 	campaignRepository := campaigns.NewRepository(db)
 
-	campaigns, _ := campaignRepository.FindByUserId(10)
-
-	fmt.Println("debug")
-	fmt.Println("debug")
-	fmt.Println("debug")
-	fmt.Println(len(campaigns))
-	for _, campaign := range campaigns {
-		fmt.Println(campaign)
-	}
-
 	userService := user.NewService(userRepository)
 	authService := auth.NewJWTService()
+	campaignService := campaigns.NewService(campaignRepository)
+
+	campaign, _ := campaignService.FindCampaigns(8)
+
+	fmt.Println(len(campaign))
 
 	userHandler := handler.NewUserHandler(userService, authService)
 
