@@ -41,6 +41,9 @@ func main() {
 
 	r := gin.Default()
 
+	// servers static assets
+	r.Static("/images", "./images")
+
 	// api versioning
 	api := r.Group("/api/v1")
 
