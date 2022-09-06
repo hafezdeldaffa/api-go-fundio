@@ -28,7 +28,7 @@ func (h *campaignHandler) GetCampaignsHandler(c *gin.Context) {
 
 	campaign, err := h.service.GetCampaigns(userID)
 	if err != nil {
-		response := helper.APIResponse("Failed to get the campaigns", http.StatusNotFound, "error", err.Error())
+		response := helper.APIResponse("Failed to get the campaigns", http.StatusBadRequest, "error", err.Error())
 		c.JSON(http.StatusBadRequest, response)
 		return
 	}
@@ -39,6 +39,32 @@ func (h *campaignHandler) GetCampaignsHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, response)
 }
 
-func (*h *campaignHandler) GetCampaignsHandler(c *gin.Context) {
-	
+func (h *campaignHandler) GetDetailCampaignHandler(c *gin.Context) {
+	/*
+		api/v1/2
+		handler: mapping id  yg di url ke struct input => service, call formatter
+		service: input struct => menangkap id di url, manggil repo
+		repository: get campaign by id ke db
+	*/
+
+	var input campaigns.GetCampaignDetailInput
+
+	err := c.ShouldBindUri(&input)
+	if err != nil {
+		response := helper.APIResponse("Failed to get the detail campaign", http.StatusBadRequest, "error", err.Error())
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	campaignDetail, err := h.service.GetCampaignById(input)
+	if err != nil {
+		response := helper.APIResponse("Failed to get the detail campaign", http.StatusBadRequest, "error", err.Error())
+		c.JSON(http.StatusBadRequest, response)
+		return
+	}
+
+	campaignDetailJSON := campaigns.FormatCampaignDetail(campaignDetail)
+
+	response := helper.APIResponse("Successfully get the detail campaign", http.StatusOK, "success", campaignDetailJSON)
+	c.JSON(http.StatusOK, response)
 }

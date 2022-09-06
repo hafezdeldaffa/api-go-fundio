@@ -3,6 +3,7 @@ package auth
 import (
 	"bwastartup/helper"
 	"errors"
+	"time"
 
 	"github.com/golang-jwt/jwt/v4"
 )
@@ -13,6 +14,8 @@ type Service interface {
 }
 
 type jwtService struct {
+	jwt.RegisteredClaims
+	UserID int `json:"user_id"`
 }
 
 func NewJWTService() *jwtService {
@@ -22,8 +25,12 @@ func NewJWTService() *jwtService {
 var secretKey = helper.GoDotEnvVariable("SECRET_KEY")
 
 func (s *jwtService) GenerateToken(userID int) (string, error) {
-	claim := jwt.MapClaims{}
-	claim["user_id"] = userID
+	claim := jwtService{
+		RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(1) * time.Hour)),
+		},
+		UserID: userID,
+	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 
