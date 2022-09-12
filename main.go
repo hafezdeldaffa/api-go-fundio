@@ -51,8 +51,10 @@ func main() {
 	api.POST("/avatars", middleware.AuthMiddleware(authService, userService), userHandler.UploadAvatar)
 	api.POST("/campaigns", middleware.AuthMiddleware(authService, userService), campaignHandler.CreateCampaignHandler)
 
-	api.GET("/campaigns", middleware.AuthMiddleware(authService, userService), campaignHandler.GetCampaignsHandler)
-	api.GET("/campaigns/:id", middleware.AuthMiddleware(authService, userService), campaignHandler.GetDetailCampaignHandler)
+	api.GET("/campaigns", campaignHandler.GetCampaignsHandler)
+	api.GET("/campaigns/:id", campaignHandler.GetDetailCampaignHandler)
+
+	api.PUT("/campaigns/:id", middleware.AuthMiddleware(authService, userService), campaignHandler.UpdateCampaign)
 
 	r.Run(":8080")
 }
