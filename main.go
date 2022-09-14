@@ -35,7 +35,7 @@ func main() {
 	userService := user.NewService(userRepository)
 	authService := auth.NewJWTService()
 	campaignService := campaigns.NewService(campaignRepository)
-	transactionService := transaction.NewService(transactionRepository)
+	transactionService := transaction.NewService(transactionRepository, campaignRepository)
 
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
