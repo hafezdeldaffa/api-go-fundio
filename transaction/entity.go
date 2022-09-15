@@ -1,6 +1,7 @@
 package transaction
 
 import (
+	"bwastartup/campaigns"
 	"bwastartup/user"
 	"time"
 )
@@ -13,6 +14,7 @@ type Transaction struct {
 	Status     string `json:"status"`
 	Code       string `json:"code"`
 	User       user.User
+	Campaign   campaigns.Campaign
 	CreatedAt  time.Time `json:"created_at"`
 	UpdatedAt  time.Time `json:"updated_at"`
 }
