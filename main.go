@@ -6,6 +6,7 @@ import (
 	"bwastartup/campaigns"
 	"bwastartup/handler"
 	"bwastartup/helper"
+	"bwastartup/payment"
 	"bwastartup/transaction"
 	"bwastartup/user"
 	"fmt"
@@ -35,7 +36,8 @@ func main() {
 	userService := user.NewService(userRepository)
 	authService := auth.NewJWTService()
 	campaignService := campaigns.NewService(campaignRepository)
-	transactionService := transaction.NewService(transactionRepository, campaignRepository)
+	paymentService := payment.NewService()
+	transactionService := transaction.NewService(transactionRepository, campaignRepository, paymentService)
 
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
@@ -55,6 +57,7 @@ func main() {
 	api.POST("/avatars", middleware.AuthMiddleware(authService, userService), userHandler.UploadAvatar)
 	api.POST("/campaigns", middleware.AuthMiddleware(authService, userService), campaignHandler.CreateCampaignHandler)
 	api.POST("/campaign-images", middleware.AuthMiddleware(authService, userService), campaignHandler.UploadImage)
+	api.POST("/transactions", middleware.AuthMiddleware(authService, userService), transactionHandler.CreateTransaction)
 
 	api.GET("/campaigns", campaignHandler.GetCampaignsHandler)
 	api.GET("/campaigns/:id", campaignHandler.GetDetailCampaignHandler)
