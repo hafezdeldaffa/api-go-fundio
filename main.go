@@ -63,6 +63,7 @@ func main() {
 	api.POST("/transactions", middleware.AuthMiddleware(authService, userService), transactionHandler.CreateTransaction)
 	api.POST("/transactions/notification", middleware.AuthMiddleware(authService, userService), transactionHandler.GetNotification)
 
+	api.GET("/users/fetch", middleware.AuthMiddleware(authService, userService), userHandler.FetchUser)
 	api.GET("/campaigns", campaignHandler.GetCampaignsHandler)
 	api.GET("/campaigns/:id", campaignHandler.GetDetailCampaignHandler)
 	api.GET("/campaigns/:id/transactions", middleware.AuthMiddleware(authService, userService), transactionHandler.GetCampaignTransactions)
