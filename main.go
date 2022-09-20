@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -41,9 +42,11 @@ func main() {
 
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
-	transactionHandler := handler.NewTransactionHandler(transactionService)
+	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
 
 	r := gin.Default()
+
+	r.Use(cors.Default())
 
 	// servers static assets
 	r.Static("/images", "./images")
@@ -58,6 +61,7 @@ func main() {
 	api.POST("/campaigns", middleware.AuthMiddleware(authService, userService), campaignHandler.CreateCampaignHandler)
 	api.POST("/campaign-images", middleware.AuthMiddleware(authService, userService), campaignHandler.UploadImage)
 	api.POST("/transactions", middleware.AuthMiddleware(authService, userService), transactionHandler.CreateTransaction)
+	api.POST("/transactions/notification", middleware.AuthMiddleware(authService, userService), transactionHandler.GetNotification)
 
 	api.GET("/campaigns", campaignHandler.GetCampaignsHandler)
 	api.GET("/campaigns/:id", campaignHandler.GetDetailCampaignHandler)

@@ -1,6 +1,7 @@
 package payment
 
 import (
+	"bwastartup/campaigns"
 	"bwastartup/helper"
 	"bwastartup/user"
 	"strconv"
@@ -9,6 +10,7 @@ import (
 )
 
 type service struct {
+	campaignRepository campaigns.Repository
 }
 
 type Service interface {
