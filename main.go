@@ -72,5 +72,5 @@ func main() {
 
 	api.PUT("/campaigns/:id", middleware.AuthMiddleware(authService, userService), campaignHandler.UpdateCampaign)
 
-	r.Run(":8080")
+	r.Run(":0.0.0.0:3000")
 }
