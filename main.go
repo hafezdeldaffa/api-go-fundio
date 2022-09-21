@@ -23,7 +23,7 @@ func main() {
 
 	dsn := fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/bwastartup?charset=utf8mb4&parseTime=True&loc=Local", userAccount, password) */
 
-	dsn := "mysql://root:4QqbLrNRhdoA6oicjzrW@containers-us-west-44.railway.app:7106/railway"
+	dsn := "root:4QqbLrNRhdoA6oicjzrW@tcp(containers-us-west-44.railway.app:7106)/railway?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err.Error())
