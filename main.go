@@ -5,6 +5,7 @@ import (
 	"bwastartup/auth/middleware"
 	"bwastartup/campaigns"
 	"bwastartup/handler"
+	"bwastartup/helper"
 	"bwastartup/payment"
 	"bwastartup/transaction"
 	"bwastartup/user"
@@ -22,6 +23,8 @@ func main() {
 	password := helper.GoDotEnvVariable("PASSWORD")
 
 	dsn := fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/bwastartup?charset=utf8mb4&parseTime=True&loc=Local", userAccount, password) */
+
+	port := helper.GoDotEnvVariable("PORT")
 
 	dsn := "root:4QqbLrNRhdoA6oicjzrW@tcp(containers-us-west-44.railway.app:7106)/railway?charset=utf8mb4&parseTime=True&loc=Local"
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
@@ -72,5 +75,5 @@ func main() {
 
 	api.PUT("/campaigns/:id", middleware.AuthMiddleware(authService, userService), campaignHandler.UpdateCampaign)
 
-	r.Run("https://danain.up.railway.app/")
+	r.Run(port)
 }
