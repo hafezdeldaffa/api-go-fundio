@@ -65,7 +65,7 @@ func main() {
 	api.POST("/campaigns", middleware.AuthMiddleware(authService, userService), campaignHandler.CreateCampaignHandler)
 	api.POST("/campaign-images", middleware.AuthMiddleware(authService, userService), campaignHandler.UploadImage)
 	api.POST("/transactions", middleware.AuthMiddleware(authService, userService), transactionHandler.CreateTransaction)
-	api.POST("/transactions/notification", middleware.AuthMiddleware(authService, userService), transactionHandler.GetNotification)
+	api.POST("/transactions/notification", transactionHandler.GetNotification)
 
 	api.GET("/users/fetch", middleware.AuthMiddleware(authService, userService), userHandler.FetchUser)
 	api.GET("/campaigns", campaignHandler.GetCampaignsHandler)
