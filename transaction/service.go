@@ -98,12 +98,24 @@ func (s *service) ProcessPayment(input TransactionNotificationInput) error {
 		return err
 	}
 
-	if input.PaymentType == "credit_card" && input.TransactionStatus == "capture" && input.FraudStatus == "accept" {
-		transaction.Status = "paid"
+	if input.TransactionStatus == "capture" {
+		if input.PaymentType == "credit_card" {
+			if input.FraudStatus == "challenge" {
+				transaction.Status = "pending"
+			} else {
+				transaction.Status = "paid"
+			}
+		}
 	} else if input.TransactionStatus == "settlement" {
 		transaction.Status = "paid"
-	} else if input.TransactionStatus == "deny" || input.TransactionStatus == "expired" || input.TransactionStatus == "canceled" {
-		transaction.Status = "canceled"
+	} else if input.TransactionStatus == "pending" {
+		transaction.Status = "pending"
+	} else if input.TransactionStatus == "deny" {
+		transaction.Status = "cancelled"
+	} else if input.TransactionStatus == "expire" {
+		transaction.Status = "cancelled"
+	} else if input.TransactionStatus == "cancel" {
+		transaction.Status = "cancelled"
 	}
 
 	updatedTransaction, err := s.repository.Update(transaction)
