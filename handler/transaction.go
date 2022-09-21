@@ -81,7 +81,7 @@ func (h *transactionHandler) CreateTransaction(c *gin.Context) {
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errorMessage := gin.H{
-			"errors": err,
+			"errors": err.Error(),
 		}
 
 		response := helper.APIResponse("Failed to create the transaction", http.StatusBadRequest, "error", errorMessage)
@@ -94,7 +94,7 @@ func (h *transactionHandler) CreateTransaction(c *gin.Context) {
 	newTransaction, err := h.service.CreateTransaction(input)
 	if err != nil {
 		errorMessage := gin.H{
-			"errors": err,
+			"errors": err.Error(),
 		}
 
 		response := helper.APIResponse("Failed to create the transaction", http.StatusBadRequest, "error", errorMessage)
