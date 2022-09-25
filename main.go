@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -24,14 +25,19 @@ func main() {
 	dsn := fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/bwastartup?charset=utf8mb4&parseTime=True&loc=Local", userAccount, password) */
 
 	port := helper.GoDotEnvVariable("PORT")
+	password := helper.GoDotEnvVariable("PASSWORD")
 
-	dsn := "root:4QqbLrNRhdoA6oicjzrW@tcp(containers-us-west-44.railway.app:7106)/railway?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := fmt.Sprintf("root:%s@tcp(containers-us-west-44.railway.app:7106)/railway?charset=utf8mb4&parseTime=True&loc=Local", password)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
 	fmt.Println("Database connected")
+
+	r := gin.Default()
+
+	r.Use(cors.Default())
 
 	userRepository := user.NewRepository(db)
 	campaignRepository := campaigns.NewRepository(db)
@@ -46,10 +52,6 @@ func main() {
 	userHandler := handler.NewUserHandler(userService, authService)
 	campaignHandler := handler.NewCampaignHandler(campaignService)
 	transactionHandler := handler.NewTransactionHandler(transactionService, paymentService)
-
-	r := gin.Default()
-
-	r.Use(middleware.CORSMiddleware())
 
 	// servers static assets
 	r.Static("/images", "./images")
