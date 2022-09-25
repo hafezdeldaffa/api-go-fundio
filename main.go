@@ -12,7 +12,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -50,7 +49,7 @@ func main() {
 
 	r := gin.Default()
 
-	r.Use(cors.Default())
+	r.Use(middleware.CORSMiddleware())
 
 	// servers static assets
 	r.Static("/images", "./images")
