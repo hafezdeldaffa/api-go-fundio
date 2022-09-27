@@ -37,14 +37,7 @@ func main() {
 
 	r := gin.Default()
 
-	config := cors.DefaultConfig()
-	config.AllowAllOrigins = true
-	config.AllowBrowserExtensions = true
-	config.AllowCredentials = true
-	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type"}
-	config.AddAllowHeaders("Authorization")
-
-	r.Use(cors.New(config))
+	r.Use(cors.Default())
 
 	userRepository := user.NewRepository(db)
 	campaignRepository := campaigns.NewRepository(db)
