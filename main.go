@@ -25,9 +25,12 @@ func main() {
 	dsn := fmt.Sprintf("%s:%s@tcp(127.0.0.1:3306)/bwastartup?charset=utf8mb4&parseTime=True&loc=Local", userAccount, password) */
 
 	port := helper.GoDotEnvVariable("PORT")
-	password := helper.GoDotEnvVariable("PASSWORD")
+	MYSQLPASSWORD := helper.GoDotEnvVariable("MYSQLPASSWORD")
+	MYSQLUSER := helper.GoDotEnvVariable("MYSQLUSER")
+	MYSQLHOST := helper.GoDotEnvVariable("MYSQLHOST")
+	MYSQLPORT := helper.GoDotEnvVariable("MYSQLPORT")
 
-	dsn := fmt.Sprintf("root:%s@tcp(containers-us-west-44.railway.app:7106)/railway?charset=utf8mb4&parseTime=True&loc=Local", password)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/railway?charset=utf8mb4&parseTime=True&loc=Local", MYSQLUSER, MYSQLPASSWORD, MYSQLHOST, MYSQLPORT)
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err.Error())
