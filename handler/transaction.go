@@ -1,10 +1,10 @@
 package handler
 
 import (
-	"bwastartup/helper"
-	"bwastartup/payment"
-	"bwastartup/transaction"
-	"bwastartup/user"
+	"danain/helper"
+	"danain/payment"
+	"danain/transaction"
+	"danain/user"
 	"net/http"
 
 	"github.com/gin-gonic/gin"

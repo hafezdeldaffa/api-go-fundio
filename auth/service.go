@@ -1,11 +1,10 @@
 package auth
 
 import (
-	"bwastartup/helper"
+	"danain/helper"
 	"errors"
-	"time"
-
 	"github.com/golang-jwt/jwt/v4"
+	"time"
 )
 
 type Service interface {

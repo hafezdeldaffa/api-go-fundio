@@ -1,12 +1,12 @@
 package middleware
 
 import (
-	"bwastartup/auth"
-	"bwastartup/helper"
-	"bwastartup/user"
 	"net/http"
 	"strings"
 
+	"danain/auth"
+	"danain/helper"
+	"danain/user"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
 )

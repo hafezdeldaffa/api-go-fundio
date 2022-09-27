@@ -1,8 +1,8 @@
 package transaction
 
 import (
-	"bwastartup/campaigns"
-	"bwastartup/payment"
+	"danain/campaigns"
+	"danain/payment"
 	"errors"
 	"fmt"
 	"math/rand"

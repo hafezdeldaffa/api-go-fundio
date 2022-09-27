@@ -1,8 +1,8 @@
 package transaction
 
 import (
-	"bwastartup/campaigns"
-	"bwastartup/user"
+	"danain/campaigns"
+	"danain/user"
 	"time"
 )
 

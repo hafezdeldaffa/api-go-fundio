@@ -1,6 +1,6 @@
 package campaigns
 
-import "bwastartup/user"
+import "danain/user"
 
 type GetCampaignDetailInput struct {
 	ID int `uri:"id" binding:"required"`

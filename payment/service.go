@@ -1,9 +1,9 @@
 package payment
 
 import (
-	"bwastartup/campaigns"
-	"bwastartup/helper"
-	"bwastartup/user"
+	"danain/campaigns"
+	"danain/helper"
+	"danain/user"
 	"strconv"
 
 	"github.com/veritrans/go-midtrans"

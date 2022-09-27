@@ -1,14 +1,14 @@
 package main
 
 import (
-	"bwastartup/auth"
-	"bwastartup/auth/middleware"
-	"bwastartup/campaigns"
-	"bwastartup/handler"
-	"bwastartup/helper"
-	"bwastartup/payment"
-	"bwastartup/transaction"
-	"bwastartup/user"
+	"danain/auth"
+	"danain/auth/middleware"
+	"danain/campaigns"
+	"danain/handler"
+	"danain/helper"
+	"danain/payment"
+	"danain/transaction"
+	"danain/user"
 	"fmt"
 	"log"
 
@@ -79,5 +79,5 @@ func main() {
 
 	api.PUT("/campaigns/:id", middleware.AuthMiddleware(authService, userService), campaignHandler.UpdateCampaign)
 
-	r.Run("0.0.0.0:" + port)
+	r.Run("0.0.0.0" + port)
 }
